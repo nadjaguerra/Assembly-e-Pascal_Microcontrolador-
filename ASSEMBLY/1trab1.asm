@@ -13,7 +13,7 @@
 	org 0X20
 
 
-temp	res 2			;registrador tempor·rio
+temp	res 2			;registrador tempor√°rio
 segu	res 1			;registrador da unidade de segundo
 segd	res 1			;registrador da dezena de segundo	
 min_u	res	1
@@ -31,9 +31,9 @@ inicio
 	movwf 	TRISB
 	movlw 	6
 	movwf	ADCON1
-	bsf		PIE1,TMR1IE			;seta interrupÁ„o do timer1
-	bsf		INTCON,PEIE			;seta interrupÁ„o do periferico
-	bsf		INTCON,GIE			;seta interrupÁ„o geral
+	bsf		PIE1,TMR1IE			;seta interrup√ß√£o do timer1
+	bsf		INTCON,PEIE			;seta interrup√ß√£o do periferico
+	bsf		INTCON,GIE			;seta interrup√ß√£o geral
 
 	banksel PORTD
 	movlw	00000000b
@@ -41,12 +41,12 @@ inicio
 	movwf	PORTA
 	clrf	T1CON	
 
-	bsf		T1CON,TMR1ON		;ir· ligar o TMR1, que È o contador 	
+	bsf		T1CON,TMR1ON		;ir√° ligar o TMR1, que √© o contador 	
 	bsf		T1CON,T1CKPS1
 	bsf		T1CON,T1CKPS0
 
 
-	clrf	segu				;inicializa a vari·vel em 0
+	clrf	segu				;inicializa a vari√°vel em 0
 	clrf	segd
 	clrf	min_u
 	clrf	min_d
@@ -68,28 +68,28 @@ loop
 	xorwf	T1CON,f	
 	
 	rrf		segu,w				;rotaciona segu para direita com carry out
-	xorlw	10					;compara se È igual a 10
-	btfss	STATUS,Z			; se for igual a 10, salta e continua o programa, se n„o for, execulta o goto
+	xorlw	10					;compara se √© igual a 10
+	btfss	STATUS,Z			; se for igual a 10, salta e continua o programa, se n√£o for, execulta o goto
 	goto	$+3	
 	clrf	segu
 	incf	segd	
 	
 	movf	segd,w				;copia o valor para w
 	xorlw	6					;compara com 6
-	btfsc	STATUS,Z			;testa, se n„o for 6, n„o ir· execultar o proximo clrf
+	btfsc	STATUS,Z			;testa, se n√£o for 6, n√£o ir√° execultar o proximo clrf
 	clrf	segd
 	incf	min_u				;se for 6, reinicia
 
 	movf	min_u,w				;copia o valor para w
 	xorlw	10					;compara com 6
-	btfss	STATUS,Z			;testa, se n„o for 6, n„o ir· execultar o proximo clrf
+	btfss	STATUS,Z			;testa, se n√£o for 6, n√£o ir√° execultar o proximo clrf
 	goto	$+3
 	clrf	min_u
 	incf	min_d				;se for 6, reinicia
 
 	movf	min_d,w				;copia o valor para w
 	xorlw	6					;compara com 6
-	btfsc	STATUS,Z			;testa, se n„o for 6, n„o ir· execultar o proximo clrf
+	btfsc	STATUS,Z			;testa, se n√£o for 6, n√£o ir√° execultar o proximo clrf
 	clrf	min_d
 	
 
@@ -97,10 +97,10 @@ loop
 	bcf		PORTA, 4			;desabilita o RA4 para ativar o RA5 - dig1
 	rrf		segu,w 				;rotaciona segu para direita com carry out
 	call	hex7seg				;decodificao valor recebido
-	movwf	PORTD				; saÌda
+	movwf	PORTD				; sa√≠da
 	bsf		PORTA, 5
 			
-	btfsc	flags,0				; se o flag estiver em 0, ele ir· setar o prÛximo comando
+	btfsc	flags,0				; se o flag estiver em 0, ele ir√° setar o pr√≥ximo comando
 	bsf		PORTD,7	
 	btfss	flags,0
 	bcf		PORTD,7		
@@ -116,10 +116,10 @@ loop
 	bcf		PORTA, 1			;desabilita o RA4 para ativar o RA5 - dig1
 	rrf		min_u,w 				;rotaciona segu para direita com carry out
 	call	hex7seg				;decodificao valor recebido
-	movwf	PORTD				; saÌda
+	movwf	PORTD				; sa√≠da
 	bsf		PORTA, 2	
 
-	btfsc	flags,0				; se o flag estiver em 0, ele ir· setar o prÛximo comando
+	btfsc	flags,0				; se o flag estiver em 0, ele ir√° setar o pr√≥ximo comando
 	bsf		PORTD,6	
 	btfss	flags,0
 	bcf		PORTD,6		
@@ -181,7 +181,7 @@ atraso3 ; X*10+7
 
 
 inter
-	movwf	w_temp				;move de w para f a vari·vel w_temp
+	movwf	w_temp				;move de w para f a vari√°vel w_temp
 	swapf	STATUS, w			;troca os nibbles alto e baixo do registrador
 	movwf	s_temp
 
@@ -206,7 +206,7 @@ inter
 
 
 hex7seg
-	andlw	01101111b			; o valor de w est· limitado a chegar a 9
+	andlw	01101111b			; o valor de w est√° limitado a chegar a 9
 	addwf	PCL,f
 	
 	retlw 	00111111b    		;digito  0	
